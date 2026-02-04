@@ -12,7 +12,7 @@ function Login() {
                 <div className="input-group">
                     <input type="password" name="password" placeholder="Password" required />
                 </div>
-                <button type="submit" className="login-button">Login</button>
+                <button type="submit" className="login-button"><Link to="/Dashboard">Login</Link></button>
                 <p className="signup-link">
                     <Link to="/register">Create new account</Link>
                 </p>
