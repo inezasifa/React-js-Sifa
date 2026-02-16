@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Dashboard.css'
 import eImage from './h.jpg';
 import videoBg from './sifa.mp4';
+import { getAllUsers } from '../db';
 
 function Dashboard(){
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
+
+    const loadUsers = async () => {
+        try {
+            const allUsers = await getAllUsers();
+            setUsers(allUsers);
+        } catch (error) {
+            console.error('Failed to load users:', error);
+        }
+    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -41,12 +56,27 @@ function Dashboard(){
             <div className="dashboard-content">
                 <div className="cards-container">
                     <div className="card">
-                        <h3>Nº users</h3>
-                        <p><ol>
-                            <li>Uwineza Sifa</li>
-                            <li>Uwineza Nailla</li>
-                            <li>Uwineza Pascal</li>
-                            </ol></p>
+                        <h3>Registered Users</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.firstName}</td>
+                                        <td>{user.lastName}</td>
+                                        <td>{user.address}</td>
+                                        <td>{user.gender}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                     <div className="card">
                         <h3>My Image</h3>
@@ -70,6 +100,7 @@ function Dashboard(){
                     <div className="contact-info">
                         <p>Email: inezasifa31@gmail.com</p>
                         <p>Contact: +250 7918 936 30</p>
+                        <p><Link to="/users" style={{ color: 'white', textDecoration: 'underline' }}>View Registered Users</Link></p>
                     </div>
                 </div>
             </footer>

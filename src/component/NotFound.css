@@ -1,0 +1,40 @@
+.notfound-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.notfound-container h1 {
+    font-size: 120px;
+    margin: 0;
+}
+
+.notfound-container h2 {
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.notfound-container p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.home-button {
+    padding: 12px 30px;
+    background-color: white;
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: transform 0.3s;
+}
+
+.home-button:hover {
+    transform: scale(1.05);
+}

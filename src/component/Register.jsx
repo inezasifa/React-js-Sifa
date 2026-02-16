@@ -1,10 +1,34 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './register.css';
+import { addUser } from '../db';
 
 function Register() {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const userData = {
+            firstName: formData.get('Fname'),
+            lastName: formData.get('Lname'),
+            address: formData.get('address'),
+            password: formData.get('password'),
+            gender: formData.get('gender'),
+            registeredAt: new Date().toISOString()
+        };
+        
+        try {
+            await addUser(userData);
+            alert('Registration successful!');
+            navigate('/login');
+        } catch (error) {
+            alert('Registration failed: ' + error.message);
+        }
+    };
+
     return (
         <div className="register-container">
-            <form className="register-form">
+            <form className="register-form" onSubmit={handleSubmit}>
                 <h1>Welcome to Registration</h1>
 
                 <div className="input-group">
@@ -17,6 +41,10 @@ function Register() {
 
                 <div className="input-group">
                     <input type="text" name="address" placeholder="Address" required />
+                </div>
+
+                <div className="input-group">
+                    <input type="password" name="password" placeholder="Password" required />
                 </div>
 
                 <div className="gender-group">
